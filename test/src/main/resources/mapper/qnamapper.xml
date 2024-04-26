@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hana.app.repository.QNARepository">
+
+    <select id="selectOne" parameterType="int" resultType="qnaDto">
+        SELECT * FROM company_qna WHERE qna_idx=#{idx}
+    </select>
+    <select id="titleSearch" parameterType="String" resultType="qnaDto">
+        SELECT * FROM company_qna
+        WHERE qna_title LIKE CONCAT('%', #{word}, '%')
+
+    </select>
+    <select id="contentSearch" parameterType="String" resultType="qnaDto">
+        SELECT * FROM company_qna
+        WHERE qna_content LIKE CONCAT('%', #{word}, '%')
+
+    </select>
+    <select id="nameSearch" parameterType="String" resultType="qnaDto">
+        SELECT * FROM company_qna
+        WHERE qna_name LIKE CONCAT('%', #{word}, '%')
+
+    </select>
+    <select id="getQnaPw" parameterType="int" resultType="String">
+        SELECT qna_pw FROM company_qna WHERE qna_idx=#{idx}
+    </select>
+    <select id="select" resultType="qnaDto">
+        SELECT * FROM company_qna ORDER BY qna_date DESC
+    </select>
+    <insert id="insert" parameterType="qnaDto">
+        INSERT INTO company_qna VALUES (0,#{qnaName}, #{qnaPw}, #{qnaTitle},#{qnaContent}, NOW())
+    </insert>
+    <update id="update" parameterType="qnaDto">
+        UPDATE company_qna SET qna_title=#{qnaTitle},qna_content=#{qnaContent} WHERE qna_idx=#{qnaIdx}
+    </update>
+    <delete id="delete" parameterType="int">
+        DELETE FROM company_qna WHERE qna_idx=#{idx}
+    </delete>
+
+</mapper>

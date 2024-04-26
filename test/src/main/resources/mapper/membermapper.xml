@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hana.app.repository.MemberRepository">
+
+    <select id="selectOne" parameterType="String" resultType="MemberDto">
+        SELECT * FROM company_member WHERE member_id=#{id}
+    </select>
+    <select id="adminLogin" parameterType="MemberDto" resultType="MemberDto">
+        SELECT * FROM company_member_admin WHERE member_id=#{memberId} AND member_pw = #{memberPw}
+    </select>
+    <select id="select" resultType="MemberDto">
+        SELECT * FROM company_member ORDER BY member_join_date DESC
+    </select>
+    <select id="getId" parameterType="MemberDto" resultType="String">
+        SELECT member_id FROM company_member WHERE member_name=#{memberName} AND member_email=#{memberEmail}
+    </select>
+    <select id="getPw" parameterType="MemberDto" resultType="String">
+        SELECT member_pw FROM company_member WHERE member_name=#{memberName} AND member_email=#{memberEmail} AND member_id = #{memberId}
+    </select>
+
+<!--검색 기능-->
+    <select id="emailSearch" parameterType="String" resultType="MemberDto">
+        SELECT * FROM company_member
+        WHERE member_email LIKE CONCAT('%', #{word}, '%')
+        ORDER BY member_join_date DESC
+
+    </select>
+    <select id="idSearch" parameterType="String" resultType="MemberDto">
+        SELECT * FROM company_member
+        WHERE member_id LIKE CONCAT('%', #{word}, '%')
+        ORDER BY member_join_date DESC
+
+    </select>
+    <select id="allSearch" parameterType="String" resultType="MemberDto">
+        SELECT * FROM company_member
+        WHERE member_id LIKE CONCAT('%', #{word}, '%')
+           OR member_email LIKE CONCAT('%', #{word}, '%')
+           OR member_name LIKE CONCAT('%', #{word}, '%')
+        ORDER BY member_join_date DESC
+
+    </select>
+    <select id="nameSearch" parameterType="String" resultType="MemberDto">
+        SELECT * FROM company_member
+        WHERE member_name LIKE CONCAT('%', #{word}, '%')
+        ORDER BY member_join_date DESC
+    </select>
+
+<!-- 정렬 기능 -->
+    <select id="sortIdAsc" resultType="MemberDto">
+        SELECT * FROM company_member ORDER BY member_id
+    </select>
+    <select id="sortIdDesc" resultType="MemberDto">
+        SELECT * FROM company_member ORDER BY member_id DESC
+    </select>
+    <select id="sortDateAsc" resultType="MemberDto">
+        SELECT * FROM company_member ORDER BY member_join_date
+    </select>
+
+<!-- 행수 제한 기능 -->
+    <select id="adminMemberPage" parameterType="int" resultType="MemberDto">
+        SELECT * FROM company_member ORDER BY member_join_date DESC LIMIT #{page}
+    </select>
+
+    <insert id="insert" parameterType="MemberDto">
+        INSERT INTO company_member VALUES (0,#{memberId},#{memberPw},#{memberName},#{memberEmail},#{memberEmailReceive},#{memberPwQuestion},#{memberPwAnswer}
+                                           ,#{memberGender},#{memberBirthDate},NOW())
+    </insert>
+    <update id="update" parameterType="MemberDto">
+        UPDATE company_member SET member_pw=#{memberPw},member_name=#{memberName} WHERE member_id=#{memberId}
+    </update>
+    <delete id="delete" parameterType="String">
+        DELETE FROM company_member WHERE member_id=#{id}
+    </delete>
+
+</mapper>

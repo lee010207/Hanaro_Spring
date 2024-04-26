@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hana.app.repository.OTORepository">
+
+    <select id="selectOne" parameterType="int" resultType="OTODto">
+        SELECT * FROM company_one2one WHERE one2one_idx=#{idx}
+    </select>
+    <select id="select" resultType="OTODto">
+        SELECT * FROM company_one2one ORDER BY qna_date DESC
+    </select>
+    <insert id="insert" parameterType="OTODto">
+        INSERT INTO company_one2one VALUES (0,#{one2oneName}, #{one2onePhone}, #{one2oneEmail},#{one2oneAddress}, #{one2oneTitle},#{one2oneContent}, NOW())
+    </insert>
+    <update id="update" parameterType="OTODto">
+        UPDATE company_one2one SET one2one_title=#{one2oneTitle},one2one_content=#{one2oneContent} WHERE one2one_idx=#{one2oneIdx}
+    </update>
+    <delete id="delete" parameterType="int">
+        DELETE FROM company_one2one WHERE one2one_idx=#{idx}
+    </delete>
+
+</mapper>

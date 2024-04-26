@@ -9,13 +9,26 @@ spring:
     view:
       prefix: /views/
       suffix: .jsp
+  datasource:
+    driver-class-name:  net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:log4jdbc:mysql://127.0.0.1:3306/shopdb?characterEncoding=utf8
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://127.0.0.1:3306/shopdb?characterEncoding=utf8&serverTimezone=Asia/Seoul
+    username: user01
+    password: 123123
+mybatis:
+  type-aliases-package: com.hana.app.data.dto
+  mapper-locations: classpath:/mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
 logging:
   level:
     root: info
 
 app:
   dir:
-    imgdir: file:///C:\Spring_Hanaro\sb2\imgs
-    logdir: file:///C:\Spring_Hanaro\sb2\logs
+    imgdir: file:C:/project/imgs/
+    logdir: file:C:/project/logs/
+  wkey: k21gYPWSY%2BOg4%2Bh9dAsgavKe0AkkiQtdg3u9%2BOIbNe6Vco6nHZ%2FoXoctaLRoAjruJCQculOSVwTG9DAlx5kglQ%3D%3D
 
-    # /root/logs/
+    #    file:/root/users/project/imgs/

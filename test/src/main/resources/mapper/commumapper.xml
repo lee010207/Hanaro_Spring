@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hana.app.repository.CommuRepository">
+
+    <select id="selectOne" parameterType="int" resultType="commuDto">
+        SELECT * FROM company_notice WHERE notice_idx=#{idx}
+    </select>
+    <select id="titleSearch" parameterType="String" resultType="commuDto">
+        SELECT * FROM company_notice
+        WHERE notice_title LIKE CONCAT('%', #{title}, '%')
+
+    </select>
+    <select id="idSearch" parameterType="String" resultType="commuDto">
+        SELECT * FROM company_notice
+        WHERE notice_member_id LIKE CONCAT('%', #{word}, '%')
+
+    </select>
+    <select id="allSearch" parameterType="String" resultType="commuDto">
+        SELECT * FROM company_notice
+        WHERE notice_member_id LIKE CONCAT('%', #{word}, '%')
+        OR notice_title LIKE CONCAT('%', #{word}, '%')
+        OR notice_content LIKE CONCAT('%', #{word}, '%')
+
+    </select>
+    <select id="contentSearch" parameterType="String" resultType="commuDto">
+        SELECT * FROM company_notice
+        WHERE notice_content LIKE CONCAT('%', #{content}, '%')
+    </select>
+    <select id="select" resultType="commuDto">
+        SELECT * FROM company_notice ORDER BY notice_date DESC
+    </select>
+<!--    <select id="orderby" parameterType="map" resultType="commuDto">-->
+<!--        SELECT * FROM company_notice ORDER BY #{sort1} #{sort2}-->
+<!--    </select>-->
+    <select id="sortIdAsc" resultType="commuDto">
+        SELECT * FROM company_notice ORDER BY notice_member_id
+    </select>
+    <select id="sortIdDesc" resultType="commuDto">
+        SELECT * FROM company_notice ORDER BY notice_member_id DESC
+    </select>
+    <select id="sortDateAsc" resultType="commuDto">
+        SELECT * FROM company_notice ORDER BY notice_date
+    </select>
+    <select id="adminNoticePage" parameterType="int" resultType="commuDto">
+        SELECT * FROM company_notice ORDER BY notice_date DESC LIMIT #{page}
+    </select>
+    <insert id="insert" parameterType="commuDto">
+        INSERT INTO company_notice VALUES (0,#{noticeTitle},#{noticeContent},#{noticeMemberId}, NOW())
+    </insert>
+    <update id="update" parameterType="commuDto">
+        UPDATE company_notice SET notice_content=#{noticeContent} WHERE notice_idx=#{noticeIdx}
+    </update>
+    <delete id="delete" parameterType="int">
+        DELETE FROM company_notice WHERE notice_idx=#{idx}
+    </delete>
+
+</mapper>

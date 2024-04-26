@@ -1,5 +1,5 @@
 server:
-  port: 8089
+  port: 81
   servlet:
     encoding:
       charset: UTF-8
@@ -9,6 +9,30 @@ spring:
     view:
       prefix: /views/
       suffix: .jsp
+  datasource:
+    driver-class-name:  net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:log4jdbc:mysql://127.0.0.1:3306/shopdb?characterEncoding=utf8
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://127.0.0.1:3306/shopdb?characterEncoding=utf8&serverTimezone=Asia/Seoul
+    username: user01
+    password: 123123
+mybatis:
+  type-aliases-package: com.hana.app.data.dto
+  mapper-locations: classpath:/mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
 logging:
   level:
     root: info
+
+app:
+  dir:
+    imgdir: file:///C:/project/imgs/  # 화면 출력 용
+    uploadimgdir: C:/project/imgs/    # 파일 Write 용
+    logdir: file:///C:/project/logs/
+  url:
+    server-url: http://172.16.21.50:81
+#    server-url: http://127.0.0.1:81
+#    only in my computer
+
+    #    file:/root/users/project/imgs/
